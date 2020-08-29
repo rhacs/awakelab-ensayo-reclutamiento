@@ -1,11 +1,16 @@
 package io.github.rhacs.reclutamiento.controladores;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.github.rhacs.reclutamiento.Metodos;
@@ -85,6 +90,46 @@ public class ReclutadoresController {
 
         // Devolver vista
         return "reclutadores.postulantes";
+    }
+
+    // Solicitudes POST
+    // -----------------------------------------------------------------------------------------
+
+    /**
+     * Agrega un nuevo {@link Reclutador} al repositorio
+     * 
+     * @param reclutador    objeto {@link Reclutador} que contiene la información a
+     *                      agregar
+     * @param bindingResult objeto {@link BindingResult} que contiene los errores de
+     *                      validación
+     * @param modelo        objeto {@link Model} que contiene el modelo de la vista
+     * @return un objeto {@link String} que contiene el nombre de la vista
+     */
+    @PostMapping
+    public String agregarReclutador(@Valid Reclutador reclutador, BindingResult bindingResult, Model modelo) {
+        // Verificar si hay errores
+        if (bindingResult.hasErrors()) {
+            // Devolver vista
+            return "reclutadores";
+        }
+
+        // Obtener el último registro agregado al repositorio
+        Optional<Reclutador> ultimo = reclutadoresRepositorio.findTopByOrderByIdDesc();
+
+        // Verificar si existe
+        if (ultimo.isPresent()) {
+            // Asignar identificador basado en el último ingreso
+            reclutador.setId(ultimo.get().getId() + 1L);
+        } else {
+            // Asignar identificador arbitrario
+            reclutador.setId(1L);
+        }
+
+        // Guardar registro
+        reclutadoresRepositorio.save(reclutador);
+
+        // Redireccionar
+        return "redirect:/reclutadores/?add=true";
     }
 
 }
