@@ -17,7 +17,7 @@ INSERT INTO reclutadores (idReclutador, nombreFantasia, razonSocial, rut, email)
 INSERT INTO reclutadores (idReclutador, nombreFantasia, razonSocial, rut, email) VALUES (4, 'Diam Sed Corp.', 'Quisque LLP', '7773197-0', 'sodales.purus@ametloremsemper.com');
 INSERT INTO reclutadores (idReclutador, nombreFantasia, razonSocial, rut, email) VALUES (5, 'Porttitor Corp.', 'Vel Venenatis Vel Ltd', '48140321-9', 'metus.eu@acorciUt.com');
 
--- Tabla: orfertas
+-- Tabla: ofertas
 INSERT INTO ofertas (idOferta, idReclutador, fecha, titulo, descripcion, salario) VALUES (1, 1, TO_DATE('05/08/2020', 'DD/MM/YYYY'), 'in magna. Phasellus dolor elit', 'sem molestie sodales. Mauris blandit enim consequat purus. Maecenas libero est, congue a, aliquet', 9967.16);
 INSERT INTO ofertas (idOferta, idReclutador, fecha, titulo, descripcion, salario) VALUES (2, 2, TO_DATE('22/07/2020', 'DD/MM/YYYY'), 'neque pellentesque massa lobortis ultrices', 'parturient montes, nascetur ridiculus mus. Proin vel nisl.Quisque fringilla euismod', 4650.67);
 INSERT INTO ofertas (idOferta, idReclutador, fecha, titulo, descripcion, salario) VALUES (3, 3, TO_DATE('14/08/2020', 'DD/MM/YYYY'), 'arcu. Sed eu nibh vulputate mauris', 'lectus. Nullam suscipit, est ac facilisis facilisis, magna tellus faucibus leo, in lobortis tellus justo sit amet nulla. Donec', 7067.09);
