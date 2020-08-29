@@ -107,7 +107,7 @@ public class PostulantesController {
      * @return un objeto {@link String} que contiene el nombre de la vista
      */
     @PostMapping
-    public String procesarFormulario(@Valid Postulante postulante, Model model, BindingResult bindingResult) {
+    public String procesarFormulario(@Valid Postulante postulante, BindingResult bindingResult, Model model) {
         // Verificar si hay errores
         if (bindingResult.hasErrors()) {
             // Devolver vista
