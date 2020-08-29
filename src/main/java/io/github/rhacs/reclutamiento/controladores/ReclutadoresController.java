@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -130,6 +132,49 @@ public class ReclutadoresController {
 
         // Redireccionar
         return "redirect:/reclutadores/?add=true";
+    }
+
+    /**
+     * Agrega una nueva {@link Oferta} al repositorio
+     * 
+     * @param oferta        objeto {@link Oferta} que contiene la información a
+     *                      agregar
+     * @param bindingResult objeto {@link BindingResult} que contiene los errores de
+     *                      validación
+     * @param modelo        objeto {@link Model} que contiene el modelo de la vista
+     * @return un objeto {@link String} que contiene el nombre de la vista
+     */
+    @PostMapping(path = "/ofertas")
+    public String agregarOferta(@Valid Oferta oferta, BindingResult bindingResult, Model modelo) {
+        // Verificar si hay errores
+        if (bindingResult.hasErrors()) {
+            // Buscar todos los reclutadores
+            List<Reclutador> reclutadores = reclutadoresRepositorio.findAll(Sort.by(Order.asc("nombreFantasia")));
+
+            // Agregar listado al modelo
+            modelo.addAttribute("reclutadores", reclutadores);
+
+            // Devolver vista
+            return "reclutadores.ofertas";
+        }
+
+        // Obtener último registro insertado
+        Optional<Oferta> ultima = ofertasRepositorio.findTopByOrderByIdDesc();
+
+        // Verificar si existe
+        if (ultima.isPresent()) {
+            // Asignar identificador basado en el último
+            oferta.setId(ultima.get().getId() + 1L);
+        } else {
+            // Asignar identificador arbitrario
+            oferta.setId(1L);
+        }
+
+        // Guardar registro
+        ofertasRepositorio.save(oferta);
+
+        // Redireccionar
+        return "redirect:/reclutadores/ofertas?add=true";
     }
 
 }
