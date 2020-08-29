@@ -71,6 +71,12 @@ public class ReclutadoresController {
         // Agregar nueva instancia vacía de Oferta al modelo
         modelo.addAttribute("oferta", new Oferta());
 
+        // Buscar listado de reclutadores
+        List<Reclutador> reclutadores = reclutadoresRepositorio.findAll(Sort.by(Order.asc("nombreFantasia")));
+
+        // Agregar listado al modelo
+        modelo.addAttribute("reclutadores", reclutadores);
+
         // Devolver vista
         return "reclutadores.ofertas";
     }
