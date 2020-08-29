@@ -23,6 +23,10 @@
                         Registro |
                         <a href="${pageContext.request.contextPath}/postulantes/ofertas">Postular</a>
                     </p>
+
+                    <core:if test="${not empty param.add}">
+                        <div class="alert alert-success my-4">El registro se ha añadido correctamente</div>
+                    </core:if>
                 </div>
 
                 <div class="col-12">
