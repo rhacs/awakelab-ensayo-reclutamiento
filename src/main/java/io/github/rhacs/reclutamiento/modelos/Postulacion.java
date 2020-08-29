@@ -13,6 +13,9 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.github.rhacs.reclutamiento.Constantes;
 
 @Entity
@@ -39,6 +42,7 @@ public class Postulacion {
     /**
      * {@link Oferta} de la {@link Postulacion}
      */
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId(value = "ofertaId")
     @JoinColumn(name = Constantes.OFERTAS_ID)
@@ -48,6 +52,7 @@ public class Postulacion {
      * Fecha de la {@link Postulacion}
      */
     @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     private LocalDate fecha;
 
     // Constructores
@@ -148,7 +153,7 @@ public class Postulacion {
 
     @Override
     public String toString() {
-        return String.format("Postulacion [id=%s, postulante=%s, oferta=%s, fecha=%s]", id, postulante, oferta, fecha);
+        return String.format("Postulacion [id=%s, fecha=%s]", id, fecha);
     }
 
 }
