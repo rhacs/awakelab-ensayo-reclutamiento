@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1 class="border-bottom pb-2 mb-5">Con Luquitas Baila el Mono</h1>
+                    <h1 class="border-bottom pb-2 mb-5 text-center">Con Luquitas Baila el Mono</h1>
                 </div>
 
                 <div class="col-md-6 text-center">
