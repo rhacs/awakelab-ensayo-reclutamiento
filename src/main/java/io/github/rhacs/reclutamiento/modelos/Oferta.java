@@ -2,6 +2,7 @@ package io.github.rhacs.reclutamiento.modelos;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -66,6 +68,12 @@ public class Oferta {
     @JoinColumn(name = Constantes.RECLUTADORES_ID)
     private Reclutador reclutador;
 
+    /**
+     * Listado de {@link Postulacion}es a la {@link Oferta}
+     */
+    @OneToMany(mappedBy = "oferta", fetch = FetchType.EAGER)
+    private Set<Postulacion> postulaciones;
+
     // Constructores
     // -----------------------------------------------------------------------------------------
 
@@ -121,6 +129,13 @@ public class Oferta {
         return reclutador;
     }
 
+    /**
+     * @return listado de {@link Postulacion}es
+     */
+    public Set<Postulacion> getPostulaciones() {
+        return postulaciones;
+    }
+
     // Setters
     // -----------------------------------------------------------------------------------------
 
@@ -164,6 +179,13 @@ public class Oferta {
      */
     public void setReclutador(Reclutador reclutador) {
         this.reclutador = reclutador;
+    }
+
+    /**
+     * @param postulaciones el listado de {@link Postulacion}es a establecer
+     */
+    public void setPostulaciones(Set<Postulacion> postulaciones) {
+        this.postulaciones = postulaciones;
     }
 
     // Herencias (Object)
