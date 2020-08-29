@@ -2,14 +2,17 @@ package io.github.rhacs.reclutamiento.controladores;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
@@ -88,6 +91,46 @@ public class PostulantesController {
 
         // Devolver vista
         return "postulantes.ofertas";
+    }
+
+    // Solicitudes POST
+    // -----------------------------------------------------------------------------------------
+
+    /**
+     * Agrega un nuevo {@link Postulante} al repositorio
+     * 
+     * @param postulante    un objeto {@link Postulante} que contiene la información
+     *                      a agregar
+     * @param model         objeto {@link Model} que contiene el modelo de la vista
+     * @param bindingResult objeto {@link BindingResult} que contiene los errores de
+     *                      validación
+     * @return un objeto {@link String} que contiene el nombre de la vista
+     */
+    @PostMapping
+    public String procesarFormulario(@Valid Postulante postulante, Model model, BindingResult bindingResult) {
+        // Verificar si hay errores
+        if (bindingResult.hasErrors()) {
+            // Devolver vista
+            return "postulantes";
+        }
+
+        // Buscar último registro ingresado al repositorio
+        Optional<Postulante> ultimo = postulantesRepositorio.findTopByOrderByIdDesc();
+
+        // Verificar si existe
+        if (ultimo.isPresent()) {
+            // Asignar identificador de acuerdo al último ingresado
+            postulante.setId(ultimo.get().getId() + 1L);
+        } else {
+            // Asignar identificador arbitrario
+            postulante.setId(1L);
+        }
+
+        // Guardar datos
+        postulantesRepositorio.save(postulante);
+
+        // Redireccionar
+        return "redirect:/postulantes/?add=true";
     }
 
 }
