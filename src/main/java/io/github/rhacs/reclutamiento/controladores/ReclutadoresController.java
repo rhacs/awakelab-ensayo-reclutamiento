@@ -1,11 +1,14 @@
 package io.github.rhacs.reclutamiento.controladores;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import io.github.rhacs.reclutamiento.Metodos;
 import io.github.rhacs.reclutamiento.modelos.Oferta;
 import io.github.rhacs.reclutamiento.modelos.Reclutador;
 import io.github.rhacs.reclutamiento.repositorios.OfertasRepositorio;
@@ -63,6 +66,25 @@ public class ReclutadoresController {
 
         // Devolver vista
         return "reclutadores.ofertas";
+    }
+
+    /**
+     * Muestra los {@link Postulante}s por cada {@link Oferta} disponible en el
+     * repositorio
+     * 
+     * @param modelo objeto {@link Model} que contiene el modelo de la vista
+     * @return un objeto {@link String} que contiene el nombre de la vista
+     */
+    @GetMapping(path = "/postulantes")
+    public String mostrarPostulantes(Model modelo) {
+        // Buscar listado de las ofertas
+        List<Oferta> ofertas = Metodos.buscarOfertas();
+
+        // Agregar listado al modelo
+        modelo.addAttribute("ofertas", ofertas);
+
+        // Devolver vista
+        return "reclutadores.postulantes";
     }
 
 }
