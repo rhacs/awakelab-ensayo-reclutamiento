@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import io.github.rhacs.reclutamiento.modelos.Postulante;
 
 @Repository
-public interface PostulanesRepositorio extends JpaRepository<Postulante, Long> {
+public interface PostulantesRepositorio extends JpaRepository<Postulante, Long> {
 
 }
