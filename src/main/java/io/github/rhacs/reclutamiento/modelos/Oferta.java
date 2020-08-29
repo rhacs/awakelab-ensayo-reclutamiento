@@ -18,6 +18,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.github.rhacs.reclutamiento.Constantes;
 
 @Entity
@@ -38,6 +40,7 @@ public class Oferta {
      * Fecha de la {@link Oferta}
      */
     @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate fecha;
 
