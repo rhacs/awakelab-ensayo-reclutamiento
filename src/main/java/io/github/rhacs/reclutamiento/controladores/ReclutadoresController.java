@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import io.github.rhacs.reclutamiento.modelos.Oferta;
 import io.github.rhacs.reclutamiento.modelos.Reclutador;
 import io.github.rhacs.reclutamiento.repositorios.OfertasRepositorio;
 import io.github.rhacs.reclutamiento.repositorios.ReclutadoresRepositorio;
@@ -47,6 +48,21 @@ public class ReclutadoresController {
 
         // Devolver vista
         return "reclutadores";
+    }
+
+    /**
+     * Muestra el formulario para agregar una nueva {@link Oferta}
+     * 
+     * @param modelo objeto {@link Model} que contiene el modelo de la vista
+     * @return un objeto {@link String} que contiene el nombre de la vista
+     */
+    @GetMapping(path = "/ofertas")
+    public String formularioOfertas(Model modelo) {
+        // Agregar nueva instancia vacía de Oferta al modelo
+        modelo.addAttribute("oferta", new Oferta());
+
+        // Devolver vista
+        return "reclutadores.ofertas";
     }
 
 }
